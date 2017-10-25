@@ -1,0 +1,17 @@
+{
+    "name": "wongyip/phphelpers",
+    "description": "Useful PHP classes.",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Wongyip",
+            "email": "wongyip@outlook.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Wongyip\\PHPHelpers\\": "src"
+        }
+    }
+}
