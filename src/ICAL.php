@@ -1,6 +1,6 @@
 <?php namespace Wongyip\PHPHelpers;
 
-class ICAL
+class ICAL extends Base
 {
     /**
      * date('Y-m-d H:i:s')
