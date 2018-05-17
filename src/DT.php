@@ -1,7 +1,7 @@
 <?php namespace Wongyip\PHPHelpers;
 
 /**
- * An product of tired to remember date formats.
+ * A product of tired to remember date formats.
  * @author Yipli
  */
 class DT
