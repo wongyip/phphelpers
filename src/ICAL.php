@@ -1,29 +1,33 @@
 <?php namespace Wongyip\PHPHelpers;
 
+/**
+ * ICAL Maker Class
+ * @author Wongyip
+ */
 class ICAL extends Base
 {
     /**
-     * date('Y-m-d H:i:s')
+     * GMDATE
      * @var string
      */
     public $dateNow;
     /**
-     * date('Y-m-d H:i:s')
+     * GMDATE
      * @var string
      */
     public $dateStart;
     /**
-     * date('Y-m-d H:i:s')
+     * GMDATE
      * @var string
      */
     public $dateEnd;
     /**
-     * e.g. "Workshop No. LS123"
+     * e.g. "Annual Conference"
      * @var string
      */
     public $summary;
     /**
-     * e.g. "What ever simpel description, as simple as it can."
+     * e.g. "Whatever simple description, as simple as it can."
      * @var string
      */
     public $description;
