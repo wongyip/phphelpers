@@ -24,4 +24,27 @@ class Format
         }
         return strtolower($string);
     }
+    
+    /**
+     * Make a phrase into "Smart Capitalized Format for Titles and Heeders".
+     * 
+     * This words are not capitalized by default: 'a', 'an', 'the', 'and', 'at', 'by', 'on', 'for', 'in', 'into' and 'onto'.
+     * 
+     * @param string $name
+     * @param array $doNotCapitalize List of words that shall not be capitalized.
+     * @throws \Exception
+     * @return string
+     */
+    static function smartCaps($phrase, $doNotCapitalize = null)
+    {
+        $doNotCapitalize = is_array($doNotCapitalize) ? $doNotCapitalize : ['a', 'an', 'the', 'and', 'at', 'by', 'on', 'for', 'in', 'into', 'onto'];
+        if (is_string($phrase)) {
+            $parts = preg_split('/\-|_|\s/', $phrase);
+            foreach ($parts as $key => $part) {
+                $parts[$key] = in_array(strtolower($part), $doNotCapitalize) ? $part : ucfirst($part);
+            }
+            return ucfirst(implode(' ', $parts));
+        }
+        return '';
+    }
 }
