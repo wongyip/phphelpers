@@ -4,7 +4,7 @@
  * A product of tired to remember date formats.
  * @author Yipli
  */
-class DT
+class DTFormat
 {
     /**
      * Get date string in MySQL datetime format.
