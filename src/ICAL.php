@@ -7,6 +7,14 @@
 class ICAL extends Base
 {
     /**
+     * Unique ID of the event. It is important to keep the UID unchanged if an
+     * event is rescheduled, mail clients like Outlook uses it to determine if
+     * this is an new event or just a change of scghedule.
+     *
+     * @var string
+     */
+    public $UID;
+    /**
      * GMDATE
      * @var string
      */
@@ -59,11 +67,12 @@ class ICAL extends Base
     /**
      * Learn how to use here.
      */
-    public function __usage()
+    static function __usage()
     {
         // Fill in all properties in your own way and call the make() method.
         return true;
         // Sample code
+        $this->UID        = md5($event->id);
         $this->dateNow    = gmdate("Ymd\THis\Z");
         $this->dateStart  = gmdate("Ymd\THis\Z", strtotime($event->date . ' ' . $event->time_start));
         $this->dateEnd    = gmdate("Ymd\THis\Z", strtotime($event->date . ' ' . $event->time_end));
@@ -106,7 +115,7 @@ DTSTART:$dateStart
 DTEND:$dateEnd
 LOCATION:$venue
 SUMMARY:$summary
-UID:$mailerFrom
+UID:$UID
 DESCRIPTION:$description
 URL;VALUE=URI:$url
 END:VEVENT
