@@ -73,17 +73,18 @@ class ICAL extends Base
         // Fill in all properties in your own way and call the make() method.
         return true;
         // Sample code
-        $this->UID        = md5($event->id);
-        $this->dateNow    = gmdate("Ymd\THis\Z");
-        $this->dateStart  = gmdate("Ymd\THis\Z", strtotime($event->date . ' ' . $event->time_start));
-        $this->dateEnd    = gmdate("Ymd\THis\Z", strtotime($event->date . ' ' . $event->time_end));
-        $this->summary    = $event->title;
-        $this->description= $event->descrition;
-        $this->venue      = $event->venue;
-        $this->url        = "https://www.example.com/events";
-        $this->calName    = "Example Calendar";
-        $this->mailerFrom = "service@example.com";
-        return $this->make();
+        $ical = new static();
+        $ical->UID        = md5($event->id);
+        $ical->dateNow    = gmdate("Ymd\THis\Z");
+        $ical->dateStart  = gmdate("Ymd\THis\Z", strtotime($event->date . ' ' . $event->time_start));
+        $ical->dateEnd    = gmdate("Ymd\THis\Z", strtotime($event->date . ' ' . $event->time_end));
+        $ical->summary    = $event->title;
+        $ical->description= $event->descrition;
+        $ical->venue      = $event->venue;
+        $ical->url        = "https://www.example.com/events";
+        $ical->calName    = "Example Calendar";
+        $ical->mailerFrom = "service@example.com";
+        return $ical->make();
     }
     /**
      * Make an ICAL string with current properties. Output sample: "BEGIN:VCALENDART...END:VCALENDAR"
