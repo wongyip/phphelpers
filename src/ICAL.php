@@ -1,7 +1,8 @@
 <?php namespace Wongyip\PHPHelpers;
 
 /**
- * ICAL Maker Class
+ * ICAL Maker Class.
+ *  
  * @author Wongyip
  */
 class ICAL extends Base
