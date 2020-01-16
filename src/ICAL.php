@@ -10,7 +10,7 @@ class ICAL extends Base
     /**
      * Unique ID of the event. It is important to keep the UID unchanged if an
      * event is rescheduled, mail clients like Outlook uses it to determine if
-     * this is an new event or just a change of scghedule.
+     * this is a new event or a changed schedule.
      *
      * @var string
      */

@@ -67,6 +67,26 @@ class DTFormat
         return self::format($format, $dt);
     }
     /**
+     * Get date string in simple form.
+     * e.g. Jan 1, 2013
+     * @return string
+     */
+    static function SimpleDate($dt = null)
+    {
+        $format = 'M j, Y';
+        return self::format($format, $dt);
+    }
+    /**
+     * Get date time string in simple form.
+     * e.g. Jan 1, 2013 1:59 PM 
+     * @return string
+     */
+    static function SimpleDateTime($dt = null)
+    {
+        $format = 'M j, Y g:i A';
+        return self::format($format, $dt);
+    }
+    /**
      * Get date string in British style.
      * e.g. January 1, 2013
      * @return string
@@ -83,7 +103,7 @@ class DTFormat
      */
     static function Outlook($dt = null)
     {
-        $format = 'l, F j, Y h:s A';
+        $format = 'l, F j, Y g:i A';
         return self::format($format, $dt);
     }
     /**
