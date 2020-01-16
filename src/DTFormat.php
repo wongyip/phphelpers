@@ -68,22 +68,22 @@ class DTFormat
     }
     /**
      * Get date string in simple form.
-     * e.g. Jan 1, 2013
+     * e.g. Jan 1, 2013 (Tue)
      * @return string
      */
     static function SimpleDate($dt = null)
     {
-        $format = 'M j, Y';
+        $format = 'M j, Y (D)';
         return self::format($format, $dt);
     }
     /**
      * Get date time string in simple form.
-     * e.g. Jan 1, 2013 1:59 PM 
+     * e.g. Jan 1, 2013 (Tue) 1:59 PM 
      * @return string
      */
     static function SimpleDateTime($dt = null)
     {
-        $format = 'M j, Y g:i A';
+        $format = 'M j, Y (D) g:i A';
         return self::format($format, $dt);
     }
     /**
