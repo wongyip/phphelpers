@@ -1,11 +1,13 @@
 {
     "name": "wongyip/phphelpers",
     "description": "Useful PHP classes.",
-    "type": "library",
+    "license": "Apache-2.0",
     "authors": [
-        {
+    	{
             "name": "Wongyip",
-            "email": "wongyip@outlook.com"
+            "email": "wongyip@outlook.com",
+            "homepage": "https://github.com/wongyip",
+            "role": "Developer"
         }
     ],
     "require": {},
