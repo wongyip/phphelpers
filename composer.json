@@ -1,7 +1,7 @@
 {
     "name": "wongyip/phphelpers",
     "description": "Useful PHP classes.",
-    "license": "Apache-2.0",
+    "license": "MIT",
     "authors": [
     	{
             "name": "Wongyip",
