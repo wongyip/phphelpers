@@ -26,25 +26,47 @@ class Format
     }
     
     /**
-     * Make a phrase into "Smart Capitalized Format for Titles and Heeders".
+     * Make a phrase into "Smart Capitalized Format for Titles and Headers".
      * 
-     * This words are not capitalized by default: 'a', 'an', 'the', 'and', 'at', 'by', 'on', 'for', 'in', 'into' and 'onto'.
-     * 
-     * @param string $name
-     * @param array $doNotCapitalize List of words that shall not be capitalized.
+     * @param string  $phrase        Input phrase.
+     * @param array   $allLower      List of words in all lower-case, default ['a', 'an', 'the', 'and', 'of', 'at', 'by', 'on', 'for', 'in', 'into', 'onto'].
+     * @param array   $allUpper      List of words in all upper-case, default ['ID'].
+     * @param array   $doNotTouch    List of words that shall keep untouched, no default.
+     * @param boolean $ignoreNonWord Skip words composed non-alphabet words, default true.
      * @throws \Exception
      * @return string
      */
-    static function smartCaps($phrase, $doNotCapitalize = null)
+    static function smartCaps($phrase, $allLower = null, $allUpper = null, $doNotTouch = null, $ignoreNonWord = true)
     {
-        $doNotCapitalize = is_array($doNotCapitalize) ? $doNotCapitalize : ['a', 'an', 'the', 'and', 'at', 'by', 'on', 'for', 'in', 'into', 'onto'];
+        $allLower = is_array($allLower) ? $allLower : ['a', 'an', 'the', 'and', 'of', 'at', 'by', 'on', 'for', 'in', 'into', 'onto'];
+        $allUpper = is_array($allUpper) ? $allUpper : ['ID'];
         if (is_string($phrase)) {
             $parts = preg_split('/\-|_|\s/', $phrase);
             foreach ($parts as $key => $part) {
-                $parts[$key] = in_array(strtolower($part), $doNotCapitalize) ? $part : ucfirst($part);
+                $parts[$key] = in_array(strtolower($part), $allLower)
+                    ? strtolower($part)
+                    : (in_array(strtoupper($part), $allUpper)
+                        ? strtoupper($part)
+                        : (!preg_match("/^[a-z]*$/i", $parts[0]) && $ignoreNonWord
+                            ? $part
+                            : ucfirst($part)
+                        )
+                    );
             }
-            return ucfirst(implode(' ', $parts));
+            return preg_match("/^[a-z]*$/i", $parts[0]) ? ucfirst(implode(' ', $parts)) : implode(' ', $parts);
         }
         return '';
+    }
+    
+    /**
+     * @param string $input
+     * @return boolean
+     */
+    static function isWord($input)
+    {
+        if (preg_match("/^[a-z]*$/i", $input)) {
+            return true;
+        }
+        return false;
     }
 }
