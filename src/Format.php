@@ -47,13 +47,13 @@ class Format
                     ? strtolower($part)
                     : (in_array(strtoupper($part), $allUpper)
                         ? strtoupper($part)
-                        : (!preg_match("/^[a-z]*$/i", $parts[0]) && $ignoreNonWord
+                        : (!self::isWord($part) && $ignoreNonWord
                             ? $part
                             : ucfirst($part)
                         )
                     );
             }
-            return preg_match("/^[a-z]*$/i", $parts[0]) ? ucfirst(implode(' ', $parts)) : implode(' ', $parts);
+            return !self::isWord($part[0]) && $ignoreNonWord ? implode(' ', $parts) : ucfirst(implode(' ', $parts));
         }
         return '';
     }
