@@ -69,4 +69,22 @@ class Format
         }
         return false;
     }
+    
+    /**
+     * String indentation.
+     * 
+     * @param string  $string    The input string
+     * @param integer $depth     Levels of indentation.
+     * @param integer $indentStr Indentation string, default 4 spaces.
+     * @return string
+     */
+    static function indent($string, $depth = 1, $indentStr = null)
+    {
+        if (!empty($string)) {
+            $indentStr = is_string($indentStr) ? $indentStr : str_repeat(' ', 4);
+            $indent = str_repeat($indentStr, $depth);
+            return preg_replace("/^/m", $indent, $string);
+        }
+        return $string;
+    }
 }
