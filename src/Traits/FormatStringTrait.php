@@ -53,7 +53,7 @@ trait FormatStringTrait
                         )
                     );
             }
-            return !self::isWord($part[0]) && $ignoreNonWord ? implode(' ', $parts) : ucfirst(implode(' ', $parts));
+            return trim(!self::isWord($parts[0]) && $ignoreNonWord ? implode(' ', $parts) : ucfirst(implode(' ', $parts)));
         }
         return '';
     }
