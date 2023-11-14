@@ -28,36 +28,36 @@ trait FormatStringTrait
     /**
      * Make a phrase into "Smart Capitalized Format for Titles and Headers".
      *
-     * @param string $phrase        Input phrase.
-     * @param array|null $allLower      List of words in all lower-case, default ['a', 'an', 'the', 'and', 'of', 'at', 'by', 'on', 'for', 'in', 'into', 'onto'].
-     * @param array|null $allUpper      List of words in all upper-case, default ['ID'].
-     * @param array|null $doNotTouch    List of words that shall keep untouched, no default.
+     * @param string $phrase         Input phrase.
+     * @param array|null $allLower   List of words in all lower-case, default ['a', 'an', 'the', 'and', 'of', 'at', 'by', 'on', 'for', 'in', 'into', 'onto'].
+     * @param array|null $allUpper   List of words in all upper-case, default ['ID'].
+     * @param array|null $doNotTouch List of words that shall keep untouched, no default.
      * @param boolean $ignoreNonWord Skip words composed non-alphabet words, default true.
      * @return string
      */
     static function smartCaps(string $phrase, array $allLower = null, array $allUpper = null, array $doNotTouch = null, bool $ignoreNonWord = true): string
     {
-        $allLower = is_array($allLower) ? $allLower : ['a', 'an', 'the', 'and', 'of', 'at', 'by', 'on', 'for', 'in', 'into', 'onto'];
-        $allUpper = is_array($allUpper) ? $allUpper : ['ID'];
-        if (is_string($phrase)) {
-            $parts = preg_split('/-|_|\s/', $phrase);
-            foreach ($parts as $key => $part) {
-                $parts[$key] = in_array($part, $doNotTouch)
-                    ? $part
-                    : (in_array(strtolower($part), $allLower)
-                        ? strtolower($part)
-                        : (in_array(strtoupper($part), $allUpper)
-                            ? strtoupper($part)
-                            : (!self::isWord($part) && $ignoreNonWord
-                                ? $part
-                                : ucfirst($part)
-                            )
+        $allLower   = is_array($allLower) ? $allLower : ['a', 'an', 'the', 'and', 'of', 'at', 'by', 'on', 'for', 'in', 'into', 'onto'];
+        $allUpper   = is_array($allUpper) ? $allUpper : ['ID'];
+        $doNotTouch = is_array($doNotTouch) ? $doNotTouch : [];
+        // Break into parts.
+        $parts = preg_split('/-|_|\s/', $phrase);
+        foreach ($parts as $key => $part) {
+            $parts[$key] = in_array($part, $doNotTouch)
+                ? $part
+                : (in_array(strtolower($part), $allLower)
+                    ? strtolower($part)
+                    : (in_array(strtoupper($part), $allUpper)
+                        ? strtoupper($part)
+                        : (!self::isWord($part) && $ignoreNonWord
+                            ? $part
+                            : ucfirst($part)
                         )
-                    );
-            }
-            return trim(!self::isWord($parts[0]) && $ignoreNonWord ? implode(' ', $parts) : ucfirst(implode(' ', $parts)));
+                    )
+                );
         }
-        return '';
+        return trim(!self::isWord($parts[0]) && $ignoreNonWord ? implode(' ', $parts) : ucfirst(implode(' ', $parts)));
+
     }
     
     /**
