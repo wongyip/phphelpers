@@ -10,7 +10,9 @@
             "role": "Developer"
         }
     ],
-    "require": {},
+    "require": {
+        "php": ">=7.4"
+    },
     "autoload": {
         "psr-4": {
             "Wongyip\\PHPHelpers\\": "src"
