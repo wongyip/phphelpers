@@ -1,126 +1,94 @@
 <?php namespace Wongyip\PHPHelpers;
 
+use DateTime;
+
 /**
  * A product of tired to remember date formats.
+ *
  * @author Yipli
+ *
+ * @method static string MySQL(DateTime|string|int $dateTime = null)           MySQL datetime: 1970-12-31 23:59:59
+ * @method static string MySQLdate(DateTime|string|int $dateTime = null)       MySQL date: 1970-12-31
+ * @method static string MySQLtime(DateTime|string|int $dateTime = null)       MySQL time: 23:59:59
+ * @method static string Filename(DateTime|string|int $dateTime = null)        Windows Filename: 2010-12-31-23-59-59
+ * @method static string FilenameCompact(DateTime|string|int $dateTime = null) Filename Compact: 20101231-235959
+ * @method static string Javascript(DateTime|string|int $dateTime = null)      Javascript date string: March 10, 2001, 23:59:59
+ * @method static string ShortDate(DateTime|string|int $dateTime = null)       Short Date: 1970-12-31
+ * @method static string SimpleDate(DateTime|string|int $dateTime = null)      Simple date string: Jan 1, 2013 (Tue)
+ * @method static string SimpleDateTime(DateTime|string|int $dateTime = null)  Simple date/time string: Jan 1, 2013 (Tue) 1:59 PM
+ * @method static string EnglishDate(DateTime|string|int $dateTime = null)     British style: January 1, 2013
+ * @method static string Outlook(DateTime|string|int $dateTime = null)         Microsoft Outlook: Tuesday, June 24, 2014 1:59 PM
  */
 class DTFormat
 {
+    private static $formats = [
+        'MySQL'           => 'Y-m-d H:i:s',
+        'MySQLdate'       => 'Y-m-d H:i:s',
+        'MySQLtime'       => 'Y-m-d H:i:s',
+        'Filename'        => 'Y-m-d-H-i-s',
+        'FilenameCompact' => 'Ymd-His',
+        'Javascript'      => 'F j, Y, H:i:s',
+        'ShortDate'       => 'Y-m-d',
+        'SimpleDate'      => 'M j, Y (D)',
+        'SimpleDateTime'  => 'M j, Y (D) g:i A',
+        'EnglishDate'     => 'F j, Y',
+        'Outlook'         => 'l, F j, Y g:i A',
+    ];
+
     /**
-     * Get date string in MySQL datetime format.
-     * e.g. 1970-12-31 23:59:59
-     * @return string
+     * Overloading.
+     *
+     * @param $name
+     * @param $arguments
+     * @return string|null
      */
-    static function MySQL($dt = null)
+    static function __callStatic($name, $arguments): ?string
     {
-        $format = 'Y-m-d H:i:s';
-        return self::format($format, $dt);
+        if (key_exists($name, self::$formats)) {
+            $dateTime = $arguments[0] ?? null;
+            return self::format(self::$formats[$name], $dateTime);
+        }
+        return null;
     }
+
     /**
-     * Get date string in MySQL date (only) format.
-     * e.g. 1989-06-04
-     * @return string
-     */
-    static function MySQLdate($dt = null)
-    {
-        $format = 'Y-m-d';
-        return self::format($format, $dt);
-    }
-    /**
-     * Get date string in MySQL time (only) format.
-     * e.g. 23:59:59
-     * @return string
-     */
-    static function MySQLtime($dt = null)
-    {
-        $format = 'H:i:s';
-        return self::format($format, $dt);
-    }
-    /**
-     * Get date string in generice OS-safe format.
-     * e.g. 2010-12-31-23-59-59
-     * @return string
-     */
-    static function Filename($dt = null)
-    {
-        $format = 'Y-m-d-H-i-s';
-        return self::format($format, $dt);
-    }
-    /**
-     * Get date string in Javascript date string format.
-     * e.g. March 10, 2001, 23:59:59
-     * @return string
-     */
-    static function Javascript($dt = null)
-    {
-        $format = 'F j, Y, H:i:s';
-        return self::format($format, $dt);
-    }
-    /**
-     * Get date string in my favourite format.
-     * e.g. 2010-12-31
-     * @return string
-     */
-    static function ShortDate($dt = null)
-    {
-        $format = 'Y-m-d';
-        return self::format($format, $dt);
-    }
-    /**
-     * Get date string in simple form.
-     * e.g. Jan 1, 2013 (Tue)
-     * @return string
-     */
-    static function SimpleDate($dt = null)
-    {
-        $format = 'M j, Y (D)';
-        return self::format($format, $dt);
-    }
-    /**
-     * Get date time string in simple form.
-     * e.g. Jan 1, 2013 (Tue) 1:59 PM 
-     * @return string
-     */
-    static function SimpleDateTime($dt = null)
-    {
-        $format = 'M j, Y (D) g:i A';
-        return self::format($format, $dt);
-    }
-    /**
-     * Get date string in British style.
-     * e.g. January 1, 2013
-     * @return string
-     */
-    static function EnglishDate($dt = null)
-    {
-        $format = 'F j, Y';
-        return self::format($format, $dt);
-    }
-    /**
-     * Get date string in (my) Microsoft Outlook format.
-     * e.g. Tuesday, June 24, 2014 1:59 PM
-     * @return string
-     */
-    static function Outlook($dt = null)
-    {
-        $format = 'l, F j, Y g:i A';
-        return self::format($format, $dt);
-    }
-    /**
-     * WHo actually do the work.
+     * Actual payload.
+     *
      * @param string $format
-     * @param \DateTime $dt
-     * @throws \Exception
-     * @return string
+     * @param DateTime|string|int|null $dateTime
+     * @return string|null
      */
-    static function format($format, $dt = null)
+    private static function format(string $format, $dateTime = null): ?string
     {
-        if (!is_string($format)) {
-            throw new \Exception('Invalid data-type of $format, expected string.');
+        if (is_null($dateTime)) {
+            return date($format);
         }
-        if ($dt && $dt instanceof \DateTime) {
-            return $dt->format($format);
+        if ($dateTime instanceof DateTime) {
+            return $dateTime->format($format);
         }
-        return date($format);
+        if (is_int($dateTime)) {
+            return date($format, $dateTime);
+        }
+        if (is_string($dateTime)) {
+            if ($time = strtotime($dateTime)) {
+                 return date($format, $time);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * For test or demonstration.
+     *
+     * @param DateTime|string|int|null $dateTime
+     * @return array|string[]
+     */
+    public static function all($dateTime = null): array
+    {
+        $output = [];
+        foreach (self::$formats as $name => $format) {
+            $output[$name] = self::format($format, $dateTime);
+        }
+        return $output;
     }
 }
