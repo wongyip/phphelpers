@@ -8,8 +8,8 @@ use DateTime;
  * @author Yipli
  *
  * @method static string MySQL(DateTime|string|int $dateTime = null)           MySQL datetime: 1970-12-31 23:59:59
- * @method static string MySQLdate(DateTime|string|int $dateTime = null)       MySQL date: 1970-12-31
- * @method static string MySQLtime(DateTime|string|int $dateTime = null)       MySQL time: 23:59:59
+ * @method static string MySqlDate(DateTime|string|int $dateTime = null)       MySQL date: 1970-12-31
+ * @method static string MySqlTime(DateTime|string|int $dateTime = null)       MySQL time: 23:59:59
  * @method static string Filename(DateTime|string|int $dateTime = null)        Windows Filename: 2010-12-31-23-59-59
  * @method static string FilenameCompact(DateTime|string|int $dateTime = null) Filename Compact: 20101231-235959
  * @method static string Javascript(DateTime|string|int $dateTime = null)      Javascript date string: March 10, 2001, 23:59:59
@@ -21,10 +21,13 @@ use DateTime;
  */
 class DTFormat
 {
-    private static $formats = [
+    /**
+     * @var array|string[]
+     */
+    private static array $formats = [
         'MySQL'           => 'Y-m-d H:i:s',
-        'MySQLdate'       => 'Y-m-d H:i:s',
-        'MySQLtime'       => 'Y-m-d H:i:s',
+        'MySqlDate'       => 'Y-m-d',
+        'MySqlTime'       => 'H:i:s',
         'Filename'        => 'Y-m-d-H-i-s',
         'FilenameCompact' => 'Ymd-His',
         'Javascript'      => 'F j, Y, H:i:s',
@@ -33,6 +36,9 @@ class DTFormat
         'SimpleDateTime'  => 'M j, Y (D) g:i A',
         'EnglishDate'     => 'F j, Y',
         'Outlook'         => 'l, F j, Y g:i A',
+        // Keep for b/w compatibility.
+        'MySQLdate'       => 'Y-m-d',
+        'MySQLtime'       => 'H:i:s',
     ];
 
     /**
