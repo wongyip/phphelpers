@@ -1,11 +1,12 @@
 <?php namespace Wongyip\PHPHelpers;
 
+use Wongyip\PHPHelpers\Traits\FormatDateInterval;
 use Wongyip\PHPHelpers\Traits\FormatFileSizeTrait;
 use Wongyip\PHPHelpers\Traits\FormatStringTrait;
 
 class Format
 {
-    use FormatFileSizeTrait, FormatStringTrait;
+    use FormatDateInterval, FormatFileSizeTrait, FormatStringTrait;
 
     // For FormatFileSizeTrait.
     const WY_FILESIZE_UNITS_BINARY_CASUAL = 'KB,MB,GB,TB,PB,EB,ZB,YB';
