@@ -3,7 +3,7 @@
 use Wongyip\HTML\Utils\Convert;
 use Wongyip\PHPHelpers\Format;
 
-trait FormatStringTrait
+trait FormatString
 {
     /**
      * Turn a string into camel-case style.

@@ -1,17 +1,18 @@
 <?php namespace Wongyip\PHPHelpers;
 
 use Exception;
+use Wongyip\PHPHelpers\Traits\FormatArray;
 use Wongyip\PHPHelpers\Traits\FormatDateInterval;
 use Wongyip\PHPHelpers\Traits\FormatDateTime;
-use Wongyip\PHPHelpers\Traits\FormatFileSizeTrait;
-use Wongyip\PHPHelpers\Traits\FormatStringTrait;
+use Wongyip\PHPHelpers\Traits\FormatFileSize;
+use Wongyip\PHPHelpers\Traits\FormatString;
 
 class Format
 {
-    use FormatDateInterval, FormatDateTime, FormatFileSizeTrait, FormatStringTrait;
+    use FormatArray, FormatDateTime, FormatDateInterval, FormatFileSize, FormatString;
 
     /**
-     * @see FormatFileSizeTrait
+     * @see FormatFileSize
      */
     const WY_FILESIZE_UNITS_BINARY_CASUAL = 'KB,MB,GB,TB,PB,EB,ZB,YB';
     const WY_FILESIZE_UNITS_BINARY_STRICT = 'KiB,MiB,GiB,TiB,PiB,EiB,ZiB,YiB';

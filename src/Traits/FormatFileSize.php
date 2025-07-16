@@ -7,7 +7,7 @@ use Exception;
  * @see https://en.wikipedia.org/wiki/File_size
  * @see https://physics.nist.gov/cuu/Units/prefixes.html
  */
-trait FormatFileSizeTrait
+trait FormatFileSize
 {
     /**
      * Convert byte-size to human readable file size string.
