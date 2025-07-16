@@ -3,7 +3,7 @@
 /**
  * ICAL Maker Class.
  *  
- * @author Wongyip
+ * @todo Need revamp.
  */
 class ICAL extends Base
 {

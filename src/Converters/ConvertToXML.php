@@ -1,5 +1,8 @@
 <?php namespace Wongyip\PHPHelpers\Converters;
 
+/**
+ * @note Need revamp.
+ */
 class ConvertToXML
 {
     /**

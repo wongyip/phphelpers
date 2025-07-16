@@ -2,6 +2,9 @@
 
 use Wongyip\PHPHelpers\Converters\ConvertToXML;
 
+/**
+ * @todo Merge into Format::class.
+ */
 class Convert
 {
     /**

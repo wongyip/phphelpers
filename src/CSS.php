@@ -1,5 +1,8 @@
 <?php namespace Wongyip\PHPHelpers;
 
+/**
+ * @todo Review
+ */
 class CSS
 {
     /**

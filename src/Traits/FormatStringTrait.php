@@ -1,5 +1,8 @@
 <?php namespace Wongyip\PHPHelpers\Traits;
 
+use Wongyip\HTML\Utils\Convert;
+use Wongyip\PHPHelpers\Format;
+
 trait FormatStringTrait
 {
     /**
@@ -11,8 +14,10 @@ trait FormatStringTrait
      * @param string $string
      * @param string $block_pattern
      * @return string
+     *
+     * @deprecated
      */
-    static function camelCase($string, $block_pattern = "/[a-z0-9]+/i")
+	public static function camelCase(string $string, string $block_pattern = "/[a-z0-9]+/i"): string
     {
         $string = trim($string);
         $output = '';
@@ -23,6 +28,109 @@ trait FormatStringTrait
             return lcfirst($output);
         }
         return strtolower($string);
+    }
+    /**
+     * convertInputToCamelCase
+     *
+     * @param string $input
+     * @return string
+     */
+    public static function camel(string $input): string
+    {
+        return lcfirst(static::studly($input));
+    }
+
+    /**
+     * @todo Review needed.
+     *
+     * @param string $input
+     * @return boolean
+     */
+    private static function isWord(string $input): bool
+    {
+        if (preg_match("/^[a-z]+$/i", $input)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * String indentation.
+     *
+     * @todo Review needed.
+     *
+     * @param string $string         The input string
+     * @param integer $depth         Levels of indentation.
+     * @param string|null $indentStr Indentation string, default 4 spaces.
+     * @return string
+     */
+    public static function indent(string $string, int $depth = 1, string $indentStr = null): string
+    {
+        if (!empty($string)) {
+            $indentStr = is_string($indentStr) ? $indentStr : str_repeat(' ', 4);
+            $indent = str_repeat($indentStr, $depth);
+            return preg_replace("/^/m", $indent, $string);
+        }
+        return $string;
+    }
+
+    /**
+     * convert-input-to-kebab-case
+     *
+     * @param string $input
+     * @return string
+     */
+    public static function kebab(string $input): string
+    {
+        return static::snake($input, '-');
+    }
+
+    /**
+     * Convert the array keys naming scheme.
+     *
+     * @param array $array
+     * @param string $case
+     * @param string|null $prefix
+     * @param string|null $suffix
+     * @return array
+     */
+    public static function keysCase(array $array, string $case, string $prefix = null, string $suffix = null): array
+    {
+        $values = array_values($array);
+        $keys  = array_keys($array);
+        $keys  = array_map(fn($k) => $prefix . Format::$case($k) . $suffix, $keys);
+        return array_combine($keys, $values);
+    }
+
+    /**
+     * convert_input_to_snake_case
+     *
+     * @param string $input
+     * @param string $delimiter
+     * @return string
+     */
+    public static function snake(string $input, string $delimiter = '_'): string
+    {
+        // Nothing to convert.
+        if (ctype_lower($input)) {
+            return $input;
+        }
+        $input = preg_replace('/\s+/u', '', ucwords($input));
+        $input = preg_replace('/(.)(?=[A-Z])/u', '$1' . $delimiter, $input);
+        return mb_strtolower($input, 'UTF-8');
+    }
+
+    /**
+     * ConvertInputToStudlyCase
+     *
+     * @param string $input
+     * @return string
+     */
+    public static function studly(string $input): string
+    {
+        $words = explode(' ', str_replace(['-', '_'], ' ', $input));
+        $studlyWords = array_map(fn ($word) => ucfirst($word), $words);
+        return implode($studlyWords);
     }
     
     /**
@@ -35,7 +143,7 @@ trait FormatStringTrait
      * @param boolean $ignoreNonWord Skip words composed non-alphabet words, default true.
      * @return string
      */
-    static function smartCaps(string $phrase, array $allLower = null, array $allUpper = null, array $doNotTouch = null, bool $ignoreNonWord = true): string
+	public static function smartCaps(string $phrase, array $allLower = null, array $allUpper = null, array $doNotTouch = null, bool $ignoreNonWord = true): string
     {
         $allLower   = is_array($allLower) ? $allLower : ['a', 'an', 'the', 'and', 'of', 'at', 'by', 'on', 'for', 'in', 'into', 'onto'];
         $allUpper   = is_array($allUpper) ? $allUpper : ['ID'];
@@ -58,35 +166,5 @@ trait FormatStringTrait
         }
         return trim(!self::isWord($parts[0]) && $ignoreNonWord ? implode(' ', $parts) : ucfirst(implode(' ', $parts)));
 
-    }
-    
-    /**
-     * @param string $input
-     * @return boolean
-     */
-    static function isWord($input)
-    {
-        if (preg_match("/^[a-z]*$/i", $input)) {
-            return true;
-        }
-        return false;
-    }
-    
-    /**
-     * String indentation.
-     *
-     * @param string  $string    The input string
-     * @param integer $depth     Levels of indentation.
-     * @param integer $indentStr Indentation string, default 4 spaces.
-     * @return string
-     */
-    static function indent($string, $depth = 1, $indentStr = null)
-    {
-        if (!empty($string)) {
-            $indentStr = is_string($indentStr) ? $indentStr : str_repeat(' ', 4);
-            $indent = str_repeat($indentStr, $depth);
-            return preg_replace("/^/m", $indent, $string);
-        }
-        return $string;
     }
 }

@@ -11,7 +11,10 @@
         }
     ],
     "require": {
-        "php": ">=7.4"
+        "php": "^8.2",
+        "ext-ctype": "*",
+        "ext-dom": "*",
+        "ext-mbstring": "*"
     },
     "autoload": {
         "psr-4": {

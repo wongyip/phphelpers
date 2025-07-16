@@ -4,7 +4,7 @@
  * Base Object
  * No constructor, no property.
  *
- * @author Wongyip
+ * @deprecated
  */
 class Base
 {

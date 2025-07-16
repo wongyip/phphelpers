@@ -7,7 +7,7 @@ trait FormatDateInterval
     /**
      * Format the input DateInterval as a human-readable string. e.g. Input
      * 'P9Y8M7DPT6H54M32S' (as DateInterval), output: "9 years 8 months 7 days 6
-     * hours 54 minutes and 32 seconds"
+     * hours 54 minutes and 32 seconds".
      *
      * @param DateInterval $di
      * @return string
@@ -26,7 +26,7 @@ trait FormatDateInterval
         // No null.
         $pieces = array_filter($pieces);
 
-        // Add "and" before the last segment "3 hours and 15 minutes"
+        // Add "and" before the last segment "3 hours and 15 minutes".
         if (count($pieces) > 1) {
             $pieces[count($pieces) - 1] = 'and ' . $pieces[count($pieces) - 1];
         }
@@ -36,7 +36,7 @@ trait FormatDateInterval
     /**
      * Format the input DateInterval as a human-readable string. e.g. Input
      * 'P9Y8M7DPT6H54M32S' (as DateInterval), output: "9 yrs 8 months 7 days 6
-     * hrs 54 mins & 32 secs"
+     * hrs 54 mins & 32 secs".
      *
      * @param DateInterval $di
      * @return string
@@ -55,7 +55,7 @@ trait FormatDateInterval
         // No null.
         $pieces = array_filter($pieces);
 
-        // Add "and" before the last segment "3 hours and 15 minutes"
+        // Add "and" before the last segment "3 hrs and 15 mins".
         if (count($pieces) > 1) {
             $pieces[count($pieces) - 1] = '& ' . $pieces[count($pieces) - 1];
         }

@@ -18,6 +18,8 @@ use DateTime;
  * @method static string SimpleDateTime(DateTime|string|int $dateTime = null)  Simple date/time string: Jan 1, 2013 (Tue) 1:59 PM
  * @method static string EnglishDate(DateTime|string|int $dateTime = null)     British style: January 1, 2013
  * @method static string Outlook(DateTime|string|int $dateTime = null)         Microsoft Outlook: Tuesday, June 24, 2014 1:59 PM
+ *
+ * @deprecated Replaced by Format (FormatDateTime trait).
  */
 class DTFormat
 {
