@@ -1,6 +1,5 @@
 <?php namespace Wongyip\PHPHelpers\Traits;
 
-use Wongyip\HTML\Utils\Convert;
 use Wongyip\PHPHelpers\Format;
 
 trait FormatString
@@ -17,7 +16,7 @@ trait FormatString
      *
      * @deprecated
      */
-	public static function camelCase(string $string, string $block_pattern = "/[a-z0-9]+/i"): string
+    public static function camelCase(string $string, string $block_pattern = "/[a-z0-9]+/i"): string
     {
         $string = trim($string);
         $output = '';
@@ -29,6 +28,7 @@ trait FormatString
         }
         return strtolower($string);
     }
+    
     /**
      * convertInputToCamelCase
      *
@@ -98,7 +98,7 @@ trait FormatString
     {
         $values = array_values($array);
         $keys  = array_keys($array);
-        $keys  = array_map(fn($k) => $prefix . Format::$case($k) . $suffix, $keys);
+        $keys  = array_map(fn($k) => $prefix . Format::{$case}($k) . $suffix, $keys);
         return array_combine($keys, $values);
     }
 
@@ -143,7 +143,7 @@ trait FormatString
      * @param boolean $ignoreNonWord Skip words composed non-alphabet words, default true.
      * @return string
      */
-	public static function smartCaps(string $phrase, array $allLower = null, array $allUpper = null, array $doNotTouch = null, bool $ignoreNonWord = true): string
+    public static function smartCaps(string $phrase, array $allLower = null, array $allUpper = null, array $doNotTouch = null, bool $ignoreNonWord = true): string
     {
         $allLower   = is_array($allLower) ? $allLower : ['a', 'an', 'the', 'and', 'of', 'at', 'by', 'on', 'for', 'in', 'into', 'onto'];
         $allUpper   = is_array($allUpper) ? $allUpper : ['ID'];
@@ -165,6 +165,5 @@ trait FormatString
                 );
         }
         return trim(!self::isWord($parts[0]) && $ignoreNonWord ? implode(' ', $parts) : ucfirst(implode(' ', $parts)));
-
     }
 }
