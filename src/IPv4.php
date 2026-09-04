@@ -15,7 +15,7 @@ class IPv4
      */
     public static function addressBetween(string $address, string $lower, string $upper): bool
     {
-        if (self::validAddress($address)&& self::validAddress($lower) && self::validAddress($upper)) {
+        if (self::validAddress($address) && self::validAddress($lower) && self::validAddress($upper)) {
             $lower   = ip2long($lower);
             $upper   = ip2long($upper);
             $address = ip2long($address);
@@ -35,7 +35,7 @@ class IPv4
      * @return bool
      *
      * @see IPv4::addressBetween() for IP addresses between two addresses inclusively.
-     * @see IPv4::addressInCIRD() for CIDR notation only.
+     * @see IPv4::addressInCIDR() for CIDR notation only.
      * @see IPv4::addressInList() for IP addresses in CSV or array only.
      */
     public static function addressIn(string $input, string|array $range): bool
@@ -101,12 +101,12 @@ class IPv4
     public static function addressInCIDR(string $address, string $cidr): bool
     {
         if (self::validAddress($address) && self::validCIDR($cidr)) {
-            list ($blkAddr, $prefix) = explode('/', $cidr);
+            [$blkAddr, $prefix] = explode('/', $cidr);
             $address = ip2long($address);
             $blkAddr = ip2long($blkAddr);
             $mask = -1 << (32 - $prefix);
-            $blkAddr &= $mask; # nb: in case the supplied subnet wasn't correctly aligned
-            return ($address & $mask) == $blkAddr;
+            $blkAddr &= $mask; // nb: in case the supplied subnet wasn't correctly aligned
+            return ($address & $mask) === $blkAddr;
         }
         return false;
     }
@@ -123,13 +123,13 @@ class IPv4
     public static function addressInList(string $input, string|array $list): bool
     {
         $list = is_array($list) ? $list : array_map('trim', explode(',', $list));
-        return in_array($input, $list);
+        return in_array($input, $list, true);
     }
 
     /**
      * Whether the input is a valid IPv4 address, e.g. "192.168.0.1".
      *
-     * Note: input in untyped, so that this also validate the type.
+     * Note: input is untyped, so that this also validates the type.
      *
      * @param mixed $input
      * @return bool
@@ -143,7 +143,7 @@ class IPv4
     /**
      * Whether the input is a valid CIDR notation, e.g. "192.168.0.1/24".
      *
-     * Note: input in untyped, so that this also validate the type.
+     * Note: input is untyped, so that this also validates the type.
      *
      * @param mixed $input
      * @return bool

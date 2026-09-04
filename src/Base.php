@@ -1,11 +1,15 @@
 <?php namespace Wongyip\PHPHelpers;
 
+use Exception;
+use SimpleXMLElement;
+
 /**
  * Base Object
  * No constructor, no property.
  *
  * @deprecated
  */
+#[\AllowDynamicProperties]
 class Base
 {
     /**
@@ -13,10 +17,10 @@ class Base
      * NOTE: error not handled if input array with numeric-key.
      *
      * @param mixed $object may be an object or array
-     * @param boolean $create_not_exists default true, set to false to ignore non-exist properties.
-     * @return boolean
+     * @param bool $create_not_exists default true, set to false to ignore non-exist properties.
+     * @return bool
      */
-    public function inheritProperties($object, $create_not_exists = true)
+    public function inheritProperties(mixed $object, bool $create_not_exists = true): bool
     {
         $object = is_object($object) ? $object : (is_array($object) ? (object) $object : null);
         if (!is_null($object)) {
@@ -36,15 +40,16 @@ class Base
         }
         return false;
     }
+
     /**
      * Inherit selected properties from given object.
      *
      * @param mixed $object may be an object or array
      * @param array $properties simple array of property names or array keys for searching
-     * @return boolean
-     * @throws \Exception
+     * @return bool
+     * @throws Exception
      */
-    public function inheritSelectedProperties($object, $properties)
+    public function inheritSelectedProperties(mixed $object, array $properties): bool
     {
         $object = is_object($object) ? $object : (is_array($object) ? (object) $object : null);
         if (!is_null($object)) {
@@ -55,21 +60,22 @@ class Base
                     }
                 }
                 else {
-                    throw new \Exception("Selected key: $key is not a property of current object.");
+                    throw new Exception("Selected key: $key is not a property of current object.");
                 }
             }
             return true;
         }
         return false;
     }
+
     /**
      * Inherit an SimpleXMLElement's attributes (NOT node text) as properties.
-     *   
-     * @param \SimpleXMLElement $node
-     * @param boolean $create_not_exists default true, set to false to ignore non-exist properties.
-     * @return boolean
+     *
+     * @param SimpleXMLElement $node
+     * @param bool $create_not_exists default true, set to false to ignore non-exist properties.
+     * @return bool
      */
-    public function inheritXmlAttributes(\SimpleXMLElement $node, $create_not_exists = true)
+    public function inheritXmlAttributes(SimpleXMLElement $node, bool $create_not_exists = true): bool
     {
         $attributes = $node->attributes();
         if ($attributes) {
@@ -89,16 +95,17 @@ class Base
         }
         return false;
     }
+
     /**
      * Update object property if exists.
      *
      * @param object|array $data
-     * @param boolean $update_null_value
+     * @param bool $update_null_value
      * @return bool
      */
-    public function updateProperties($properties, $update_null_value = true)
+    public function updateProperties(mixed $properties, bool $update_null_value = true): bool
     {
-        $properties= is_object($properties) ? $properties: (is_array($properties) ? (object) $properties: null);
+        $properties = is_object($properties) ? $properties : (is_array($properties) ? (object) $properties : null);
         if (!is_null($properties)) {
             foreach (get_object_vars($properties) as $key => $value) {
                 if (property_exists($this, $key)) {
@@ -111,13 +118,15 @@ class Base
         }
         return false;
     }
+
     /**
      * Convert $this to an Associative Array recursively. Private properties were not being exported.
      *
      * Inspired by victorbstan/php_object_to_array.php
      * @see http://gist.github.com/victorbstan/744478
+     * @return array|null
      */
-    public function toArray()
+    public function toArray(): ?array
     {
         return json_decode(json_encode($this), true);
     }

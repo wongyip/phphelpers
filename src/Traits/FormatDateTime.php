@@ -6,17 +6,17 @@ use Exception;
 /**
  * A product of tired to remember date formats.
  *
- * @method static string MySQL(DateTime|string|int $dateTime = null)           MySQL datetime: 1970-12-31 23:59:59
- * @method static string MySqlDate(DateTime|string|int $dateTime = null)       MySQL date only: 1970-12-31
- * @method static string MySqlTime(DateTime|string|int $dateTime = null)       MySQL time only: 23:59:59
- * @method static string Filename(DateTime|string|int $dateTime = null)        Windows Filename: 2010-12-31-23-59-59
- * @method static string FilenameCompact(DateTime|string|int $dateTime = null) Filename Compact: 20101231-235959
- * @method static string JavaScript(DateTime|string|int $dateTime = null)      Javascript date string: March 10, 2001, 23:59:59
- * @method static string ShortDate(DateTime|string|int $dateTime = null)       Short Date: 1970-12-31
- * @method static string SimpleDate(DateTime|string|int $dateTime = null)      Simple date string: Jan 1, 2013 (Tue)
- * @method static string SimpleDateTime(DateTime|string|int $dateTime = null)  Simple date/time string: Jan 1, 2013 (Tue) 1:59 PM
- * @method static string EnglishDate(DateTime|string|int $dateTime = null)     British style: January 1, 2013
- * @method static string Outlook(DateTime|string|int $dateTime = null)         Microsoft Outlook: Tuesday, June 24, 2014 1:59 PM
+ * @method static string MySQL(DateTime|string|int|null $dateTime = null)           MySQL datetime: 1970-12-31 23:59:59
+ * @method static string MySqlDate(DateTime|string|int|null $dateTime = null)       MySQL date only: 1970-12-31
+ * @method static string MySqlTime(DateTime|string|int|null $dateTime = null)       MySQL time only: 23:59:59
+ * @method static string Filename(DateTime|string|int|null $dateTime = null)        Windows Filename: 2010-12-31-23-59-59
+ * @method static string FilenameCompact(DateTime|string|int|null $dateTime = null) Filename Compact: 20101231-235959
+ * @method static string JavaScript(DateTime|string|int|null $dateTime = null)      Javascript date string: March 10, 2001, 23:59:59
+ * @method static string ShortDate(DateTime|string|int|null $dateTime = null)       Short Date: 1970-12-31
+ * @method static string SimpleDate(DateTime|string|int|null $dateTime = null)      Simple date string: Jan 1, 2013 (Tue)
+ * @method static string SimpleDateTime(DateTime|string|int|null $dateTime = null)  Simple date/time string: Jan 1, 2013 (Tue) 1:59 PM
+ * @method static string EnglishDate(DateTime|string|int|null $dateTime = null)     British style: January 1, 2013
+ * @method static string Outlook(DateTime|string|int|null $dateTime = null)         Microsoft Outlook: Tuesday, June 24, 2014 1:59 PM
  */
 trait FormatDateTime
 {
@@ -53,9 +53,9 @@ trait FormatDateTime
      * @param DateTime|string|int|null $dateTime
      * @return string|null
      */
-    public static function dateTime(string $format, DateTime|string|int $dateTime = null): ?string
+    public static function dateTime(string $format, DateTime|string|int|null $dateTime = null): ?string
     {
-        $format = key_exists($format, self::$datetimeFormats) ? self::$datetimeFormats[$format] : $format;
+        $format = array_key_exists($format, self::$datetimeFormats) ? self::$datetimeFormats[$format] : $format;
 
         if (is_null($dateTime)) {
             return date($format);
@@ -83,9 +83,9 @@ trait FormatDateTime
      * Get an array of the given or current date/time in all predefined formats.
      *
      * @param DateTime|string|int|null $dateTime
-     * @return array|string|null
+     * @return array|string[]
      */
-    public static function testFormatDateTime(DateTime|int|string $dateTime = null): array|string|null
+    public static function testFormatDateTime(DateTime|int|string|null $dateTime = null): array
     {
         return array_map(
             function ($format) use ($dateTime) {

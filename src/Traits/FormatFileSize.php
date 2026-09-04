@@ -15,13 +15,15 @@ trait FormatFileSize
      * @param int $bytes File size in bytes.
      * @param bool|null $prefix Default to binary prefixes, insert any non-null value use metric prefixes (or SI prefixes, where kilo = 10^3).
      * @param bool|null $unit Default to strict units, insert any non-null value for casual unit.
+     * @param int $precision Number of decimal places.
+     * @return string
      */
-    public static function fileSize(int $bytes, bool $prefix = null, bool $unit = null, $precision = 2): string
+    public static function fileSize(int $bytes, ?bool $prefix = null, ?bool $unit = null, int $precision = 2): string
     {
         try {
             return self::fileSizeStrict(max($bytes, 0), $prefix, $unit, $precision);
         }
-        catch (Exception $e) {
+        catch (Exception) {
             // Call fileSizeStrict() directly if you need an exception.
             return '0 Byte';
         }
@@ -33,9 +35,11 @@ trait FormatFileSize
      * @param int $bytes File size in bytes.
      * @param bool|null $prefix Default to binary prefixes, insert any non-null value use metric prefixes (or SI prefixes, where kilo = 10^3).
      * @param bool|null $unit Default to strict units, insert any non-null value for casual unit.
+     * @param int $precision Number of decimal places.
+     * @return string
      * @throws Exception
      */
-    public static function fileSizeStrict(int $bytes, bool $prefix = null, bool $unit = null, $precision = 2): string
+    public static function fileSizeStrict(int $bytes, ?bool $prefix = null, ?bool $unit = null, int $precision = 2): string
     {
         if ($bytes < 0) {
             throw new Exception(
@@ -64,7 +68,7 @@ trait FormatFileSize
         // Do the calculations
         $u = -1;
         $output = $bytes;
-        while (abs($output) >= $thresh & $u < count($units) - 1) {
+        while (abs($output) >= $thresh && $u < count($units) - 1) {
             $output /= $thresh;
             $u++;
         }

@@ -17,14 +17,14 @@ trait FormatDateInterval
         // Get all
         $pieces = [];
         $pieces[] = $di->y ? sprintf('%d %s', $di->y, $di->y > 1 ? 'years'   : 'year') : null;
-        $pieces[] = $di->m ? sprintf('%d %s', $di->m, $di->d > 1 ? 'months'  : 'month') : null;
+        $pieces[] = $di->m ? sprintf('%d %s', $di->m, $di->m > 1 ? 'months'  : 'month') : null;
         $pieces[] = $di->d ? sprintf('%d %s', $di->d, $di->d > 1 ? 'days'    : 'day') : null;
         $pieces[] = $di->h ? sprintf('%d %s', $di->h, $di->h > 1 ? 'hours'   : 'hour') : null;
         $pieces[] = $di->i ? sprintf('%d %s', $di->i, $di->i > 1 ? 'minutes' : 'minute') : null;
         $pieces[] = $di->s ? sprintf('%d %s', $di->s, $di->s > 1 ? 'seconds' : 'second') : null;
 
         // No null.
-        $pieces = array_filter($pieces);
+        $pieces = array_values(array_filter($pieces));
 
         // Add "and" before the last segment "3 hours and 15 minutes".
         if (count($pieces) > 1) {
@@ -46,14 +46,14 @@ trait FormatDateInterval
         // Get all
         $pieces = [];
         $pieces[] = $di->y ? sprintf('%d %s', $di->y, $di->y > 1 ? 'yrs'    : 'yr') : null;
-        $pieces[] = $di->m ? sprintf('%d %s', $di->m, $di->d > 1 ? 'months' : 'month') : null;
+        $pieces[] = $di->m ? sprintf('%d %s', $di->m, $di->m > 1 ? 'months' : 'month') : null;
         $pieces[] = $di->d ? sprintf('%d %s', $di->d, $di->d > 1 ? 'days'   : 'day') : null;
         $pieces[] = $di->h ? sprintf('%d %s', $di->h, $di->h > 1 ? 'hrs'    : 'hr') : null;
         $pieces[] = $di->i ? sprintf('%d %s', $di->i, $di->i > 1 ? 'mins'   : 'min') : null;
         $pieces[] = $di->s ? sprintf('%d %s', $di->s, $di->s > 1 ? 'secs'   : 'sec') : null;
 
         // No null.
-        $pieces = array_filter($pieces);
+        $pieces = array_values(array_filter($pieces));
 
         // Add "and" before the last segment "3 hrs and 15 mins".
         if (count($pieces) > 1) {

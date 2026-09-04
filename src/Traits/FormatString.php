@@ -60,14 +60,14 @@ trait FormatString
      * @todo Review needed.
      *
      * @param string $string         The input string
-     * @param integer $depth         Levels of indentation.
+     * @param int $depth             Levels of indentation.
      * @param string|null $indentStr Indentation string, default 4 spaces.
      * @return string
      */
-    public static function indent(string $string, int $depth = 1, string $indentStr = null): string
+    public static function indent(string $string, int $depth = 1, ?string $indentStr = null): string
     {
         if (!empty($string)) {
-            $indentStr = is_string($indentStr) ? $indentStr : str_repeat(' ', 4);
+            $indentStr = $indentStr ?? str_repeat(' ', 4);
             $indent = str_repeat($indentStr, $depth);
             return preg_replace("/^/m", $indent, $string);
         }
@@ -94,7 +94,7 @@ trait FormatString
      * @param string|null $suffix
      * @return array
      */
-    public static function keysCase(array $array, string $case, string $prefix = null, string $suffix = null): array
+    public static function keysCase(array $array, string $case, ?string $prefix = null, ?string $suffix = null): array
     {
         $values = array_values($array);
         $keys  = array_keys($array);
@@ -140,14 +140,14 @@ trait FormatString
      * @param array|null $allLower   List of words in all lower-case, default ['a', 'an', 'the', 'and', 'of', 'at', 'by', 'on', 'for', 'in', 'into', 'onto'].
      * @param array|null $allUpper   List of words in all upper-case, default ['ID'].
      * @param array|null $doNotTouch List of words that shall keep untouched, no default.
-     * @param boolean $ignoreNonWord Skip words composed non-alphabet words, default true.
+     * @param bool $ignoreNonWord    Skip words composed non-alphabet words, default true.
      * @return string
      */
-    public static function smartCaps(string $phrase, array $allLower = null, array $allUpper = null, array $doNotTouch = null, bool $ignoreNonWord = true): string
+    public static function smartCaps(string $phrase, ?array $allLower = null, ?array $allUpper = null, ?array $doNotTouch = null, bool $ignoreNonWord = true): string
     {
-        $allLower   = is_array($allLower) ? $allLower : ['a', 'an', 'the', 'and', 'of', 'at', 'by', 'on', 'for', 'in', 'into', 'onto'];
-        $allUpper   = is_array($allUpper) ? $allUpper : ['ID'];
-        $doNotTouch = is_array($doNotTouch) ? $doNotTouch : [];
+        $allLower   = $allLower ?? ['a', 'an', 'the', 'and', 'of', 'at', 'by', 'on', 'for', 'in', 'into', 'onto'];
+        $allUpper   = $allUpper ?? ['ID'];
+        $doNotTouch = $doNotTouch ?? [];
         // Break into parts.
         $parts = preg_split('/-|_|\s/', $phrase);
         foreach ($parts as $key => $part) {

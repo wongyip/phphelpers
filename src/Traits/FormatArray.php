@@ -39,19 +39,15 @@ trait FormatArray
      */
     public static function toText(
         array|JsonSerializable $input,
-        array                  $included = null,
-        array                  $excluded = null,
-        callable               $keyFormatter = null,
-        callable               $valueFormatter = null,
-        string                 $separator = null,
-        bool                   $suffixLineFeed = null): string
+        ?array                 $included = null,
+        ?array                 $excluded = null,
+        ?callable              $keyFormatter = null,
+        ?callable              $valueFormatter = null,
+        ?string                $separator = null,
+        ?bool                  $suffixLineFeed = null): string
     {
         // Make it an array.
         $input = $input instanceof JsonSerializable ? json_decode(json_encode($input), true) : $input;
-
-        if ($excluded === false) {
-            return '';
-        }
 
         // Handle included/excluded keys.
         if (is_array($included)) {

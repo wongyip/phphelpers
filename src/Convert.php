@@ -9,11 +9,11 @@ class Convert
 {
     /**
      * Convert the input object to XML string.
-     * 
+     *
      * @param mixed $object
      * @return string
      */
-    static function toXML($object)
+    public static function toXML(mixed $object): string
     {
         return ConvertToXML::fromObject($object);
     }

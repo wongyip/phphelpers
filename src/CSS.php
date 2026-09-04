@@ -6,34 +6,24 @@
 class CSS
 {
     /**
-     * Compose a space sepatated CSS classes string, for the HTML 'class' attribute.
-     * 
-     * @param string|string[] $original
-     * @param string|string[] $add
-     * @param string|string[] $remove
+     * Compose a space separated CSS classes string, for the HTML 'class' attribute.
+     *
+     * @param string|array $original
+     * @param string|array $add
+     * @param string|array $remove
      * @return string
      */
-    static function classAttribute($original, $add, $remove)
+    public static function classAttribute(string|array $original, string|array $add, string|array $remove): string
     {
-        $classes = is_string($original) ? explode(' ', $original) : (is_array($original) ? $original : []); 
-        
+        $classes = is_string($original) ? explode(' ', $original) : $original;
+
         // Add first
-        if (!empty($add)) {
-            $adds = is_array($add) ? $add : explode(' ', $add);
-        }
-        else {
-            $adds = [];
-        }
-        
+        $adds = empty($add) ? [] : (is_array($add) ? $add : explode(' ', $add));
+
         // Then remove
-        if (!empty($remove)) {
-            $removes = is_array($remove) ? $remove : explode(' ', $remove);
-        }
-        else {
-            $removes = [];
-        }
-        
-        // Uniqie < Diff < Merge
+        $removes = empty($remove) ? [] : (is_array($remove) ? $remove : explode(' ', $remove));
+
+        // Unique < Diff < Merge
         return implode(' ', array_unique(array_diff(array_merge($classes, $adds), $removes)));
     }
 }

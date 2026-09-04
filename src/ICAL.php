@@ -68,7 +68,7 @@ class ICAL extends Base
     /**
      * Learn how to use here.
      */
-    static function __usage()
+    public static function __usage()
     {
         // Fill in all properties in your own way and call the make() method.
         return true;
@@ -100,28 +100,30 @@ class ICAL extends Base
      * @param string $filename
      * @return string
      */
-    public function make()
+    public function make(): string
     {
         $properties = $this->toArray();
         extract($properties);
         // Make it
-        $ical = "BEGIN:VCALENDAR
-METHOD:REQUEST
-VERSION:2.0
-X-WR-CALNAME:$calName
-PRODID:$prodId
-BEGIN:VEVENT
-ORGANIZER:MAILTO:$mailerFrom
-DTSTAMP:$dateNow
-DTSTART:$dateStart
-DTEND:$dateEnd
-LOCATION:$venue
-SUMMARY:$summary
-UID:$UID
-DESCRIPTION:$description
-URL;VALUE=URI:$url
-END:VEVENT
-END:VCALENDAR";
+        $ical = <<<ICAL
+            BEGIN:VCALENDAR
+            METHOD:REQUEST
+            VERSION:2.0
+            X-WR-CALNAME:$calName
+            PRODID:$prodId
+            BEGIN:VEVENT
+            ORGANIZER:MAILTO:$mailerFrom
+            DTSTAMP:$dateNow
+            DTSTART:$dateStart
+            DTEND:$dateEnd
+            LOCATION:$venue
+            SUMMARY:$summary
+            UID:$UID
+            DESCRIPTION:$description
+            URL;VALUE=URI:$url
+            END:VEVENT
+            END:VCALENDAR
+            ICAL;
         // Byebye tabs
         // $ical = preg_replace("/$\s+/m", "", $ical);
         // $ical = preg_replace("/$\s+/m", "", $ical);
